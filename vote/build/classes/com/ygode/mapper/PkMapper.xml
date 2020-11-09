@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ygode.dao.PkMapper">
+
+	<!-- 查询pk页面当前投票信息 -->
+	<select id="findBattleManageStateInfo" resultType="com.ygode.bean.BattleManageVo">
+		SELECT
+			bm.id AS id,
+			bm.player_oneID AS playerOneID,
+			bm.song_one AS songOne,
+			pl_1.player_name AS playerOneName,
+			pl_1.player_img AS playerOneImg,
+			bm.ticket_one AS ticketOne,
+			bm.score_one AS scoreOne,
+			bm.player_twoID AS playerTwoID,
+			bm.song_two AS songTwo,
+			pl_2.player_name AS playerTwoName,
+			pl_2.player_img AS playerTwoImg,
+			bm.ticket_two AS ticketTwo,
+			bm.score_two AS scoreTwo,
+			bm.state AS state,
+			bm.url AS url,
+			bm.Mattch AS Mattch
+		FROM
+			battle_manage AS bm
+		LEFT JOIN player AS pl_1 ON bm.player_oneID = pl_1.id
+		LEFT JOIN player AS pl_2 ON bm.player_twoID = pl_2.id
+		WHERE
+			state = 1
+			or state = 3
+	</select>
+	
+		<!-- 查询pk页面当前投票信息 -->
+	<select id="findBattleManageStateInfoPk2" resultType="com.ygode.bean.BattleManageVo">
+		SELECT
+			bm.id AS id,
+			bm.player_one AS playerOne,
+			pl_1.player_name AS playerOneName,
+			pl_1.player_img AS playerOneImg,
+			bm.ticket_one AS ticketOne,
+			bm.score_one AS scoreOne,
+			bm.player_two AS playerTwo,
+			pl_2.player_name AS playerTwoName,
+			pl_2.player_img AS playerTwoImg,
+			bm.ticket_two AS ticketTwo,
+			bm.score_two AS scoreTwo,
+			bm.state AS state,
+			bm.insert_state AS insertState
+		FROM
+			battle_manage AS bm
+		LEFT JOIN player AS pl_1 ON bm.player_oneID = pl_1.id
+		LEFT JOIN player AS pl_2 ON bm.player_twoID = pl_2.id
+		WHERE
+			state = 1
+			or state = 3
+	</select>
+
+	<!-- 查询出选手投票的分数 -->
+	<select id="findCountVoteVo" parameterType="java.lang.Integer" resultType="com.ygode.bean.VoteVo">
+		SELECT
+			battle_manage_id AS id,
+			player AS player,
+			COUNT(battle_manage_id) AS ticketNew
+		FROM
+			vote
+		WHERE
+			battle_manage_id = #{VALUE}
+		GROUP BY
+			player
+	</select>
+
+	<select id="findPK3" resultType="com.ygode.bean.BattleManageVo">
+		SELECT
+			bm.id AS id,
+			bm.player_one AS playerOne,
+			pl_1.player_name AS playerOneName,
+			pl_1.player_img AS playerOneImg,
+			<!-- bm.ticket_one AS ticketOne,
+			bm.ticket_one_new AS ticketOneNew, -->
+			bm.score_one AS scoreOne,
+			bm.state AS state,
+			bm.insert_state AS insertState
+		FROM
+			`battle_manage` AS bm
+		LEFT JOIN player AS pl_1 ON player_one = pl_1.player_id
+		WHERE
+			state = 1
+	</select>
+
+	<select id="findPK3TicketOne" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT
+			COUNT(battle_manage_id) AS count
+		FROM
+			vote
+		WHERE
+			battle_manage_id = #{VALUE }
+		AND ticket = 1
+	</select>
+	
+	<select id="findPK3TicketOneNew" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT
+			COUNT(battle_manage_id) AS count
+		FROM
+			vote
+		WHERE
+			battle_manage_id = #{VALUE }
+		AND ticket = -1
+	</select>
+
+</mapper>

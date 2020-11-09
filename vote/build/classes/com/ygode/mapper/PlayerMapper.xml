@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ygode.dao.PlayerMapper" >
+  <resultMap id="BaseResultMap" type="com.ygode.bean.Player" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="player_id" property="playerId" jdbcType="VARCHAR" />
+    <result column="player_name" property="playerName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ygode.bean.Player" extends="BaseResultMap" >
+    <result column="player_img" property="playerImg" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, player_id, player_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    player_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from player
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from player
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ygode.bean.Player" >
+    insert into player (id, player_id, player_name, 
+      player_img)
+    values (#{id,jdbcType=INTEGER}, #{playerId,jdbcType=VARCHAR}, #{playerName,jdbcType=VARCHAR}, 
+      #{playerImg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ygode.bean.Player" >
+    insert into player
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="playerId != null" >
+        player_id,
+      </if>
+      <if test="playerName != null" >
+        player_name,
+      </if>
+      <if test="playerImg != null" >
+        player_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="playerId != null" >
+        #{playerId,jdbcType=VARCHAR},
+      </if>
+      <if test="playerName != null" >
+        #{playerName,jdbcType=VARCHAR},
+      </if>
+      <if test="playerImg != null" >
+        #{playerImg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ygode.bean.Player" >
+    update player
+    <set >
+      <if test="playerId != null" >
+        player_id = #{playerId,jdbcType=VARCHAR},
+      </if>
+      <if test="playerName != null" >
+        player_name = #{playerName,jdbcType=VARCHAR},
+      </if>
+      <if test="playerImg != null" >
+        player_img = #{playerImg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ygode.bean.Player" >
+    update player
+    set player_id = #{playerId,jdbcType=VARCHAR},
+      player_name = #{playerName,jdbcType=VARCHAR},
+      player_img = #{playerImg,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ygode.bean.Player" >
+    update player
+    set player_id = #{playerId,jdbcType=VARCHAR},
+      player_name = #{playerName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

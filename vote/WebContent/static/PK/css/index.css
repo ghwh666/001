@@ -1,0 +1,172 @@
+/*
+  Created by IntelliJ IDEA.
+  User: Early Mo
+  Date: 2019/06/17
+  Time: 11:49
+  To change this template use File | Settings | File Templates.
+*/
+/*-------------------------公共样式-------------------------------*/
+*{
+    margin:0;
+    padding:0;
+}
+ul,li,ol{
+    list-style:none;
+}
+a{
+    text-decoration:none;
+}
+.clears{
+    clear:both;
+    height:0;
+    line-height:0;
+    font-size:0;
+    overflow: hidden;
+}
+body{
+    margin:0;
+    font-family:Arial,Verdana,"微软雅黑","宋体";
+}
+/*-------------------------公共样式 结束--------------------------*/
+
+/*-------------------------自定义样式-------------------------------*/
+.video1{
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    z-index: -1;
+}
+/*---------------头部  样式-----------------*/
+.mzc_h1{
+    text-align: center;
+    position: relative;
+    top: 30px;
+}
+/*---------------视频/比赛信息 播放区域  样式-----------------*/
+
+.mzc_content{
+    width: 70%;
+    height: 500px;
+    margin: auto;
+    margin-top: 100px;
+    border: red 2px solid;
+    position: relative;
+    background:linear-gradient(white, #c0a16b); /* 标准的语法 */
+    border-radius:25px;
+    box-shadow: 20px 20px 15px #888888;
+}
+.mzc_content .mzc_pk{
+    width: 90%;
+    height: 480px;
+    margin: auto;
+    display: none;
+    /*display: flex;*/
+    /*justify-content: space-around;*/
+    border: blue 1px solid;
+}
+
+    /*------选手 信息部分---------*/
+.mzc_content .mzc_pk .mzc_user{
+    width: 20%;
+    height: 480px;
+    /*border: red 1px solid;*/
+    float: left;
+    position: relative;
+    margin-right: 30px;
+}
+        /*---选手头像样式---*/
+.mzc_content .mzc_pk .mzc_user img{
+    border-radius: 50px;
+    margin-left: 40px;
+}
+        /*---选手得票数---*/
+.mzc_content .mzc_pk .mzc_user .mzc_userticket{
+    color: blue;
+    position: absolute;
+    top:105px;
+    left: 75px;
+}
+.mzc_content .mzc_pk .mzc_user .mzc_usertotal{
+    width: 50px;
+    height: 300px;
+    background: #c0a16b;
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+}
+        /*---选手姓名----*/
+.mzc_content .mzc_pk .mzc_user .mzc_username{
+    position: absolute;
+    bottom: 10px;
+    left: 65px;
+}
+    /*--------比赛信息部分--------*/
+.mzc_content .mzc_pk .mzc_gameinfo{
+    width: 50%;
+    height: 480px;
+   /* border: red 2px solid;*/
+    float: left;
+    margin-right: 30px;
+}
+
+/*-----------------pk结束动画展示 样式----------------*/
+.mzc_content .mzc_pk .showWinner{
+    width: 50%;
+    height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    /*border:#8a6d3b 1px solid;*/
+    z-index: 10;
+    position: relative;
+    background:linear-gradient(white, #c0a16b); /* 标准的语法 */
+}
+.mzc_content .mzc_pk .showWinner>sapn{
+    color: red;
+    position: absolute;
+    top: 10px;
+    left: 100px;
+    font-size: 40px;
+    line-height: 40px;
+}
+.mzc_content .mzc_pk .showWinner .winmv{
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+    width: 468px ;
+    height: 370px;
+    overflow: hidden;
+}
+ .mzc_content .mzc_pk .showWinner .winner_img{
+     position: absolute;
+     bottom: 60px;
+     left: 140px;
+     border-radius: 100px;
+ }
+
+
+/*------------宣传片 视频--------------------------*/
+.mzc_move{
+    width: 80%;
+    height: 480px;
+    margin: auto;
+   /* border: yellow 1px solid;*/
+}
+.mzc_move .xcmove{
+    width:100%;
+    height: 480px;
+    z-index: 9;
+}
+/*---------------二维码部分  样式-----------------*/
+.mzc_ewm{
+    width: 300px;
+    height: 300px;
+    position: relative;
+    left: 200px;
+    bottom: 300px;
+    display: none;
+}
+

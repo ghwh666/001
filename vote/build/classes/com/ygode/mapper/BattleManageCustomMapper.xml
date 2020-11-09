@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ygode.dao.BattleManageCustomMapper" >
+  <resultMap id="BaseResultMap" type="com.ygode.bean.BattleManage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="player_one" property="playerOne" jdbcType="VARCHAR" />
+    <result column="song_one" property="songOne" jdbcType="VARCHAR" />
+    <result column="ticket_one" property="ticketOne" jdbcType="INTEGER" />
+    <result column="ticket_one_new" property="ticketOneNew" jdbcType="INTEGER" />
+    <result column="ticket_one_new" property="ticketOneNew" jdbcType="INTEGER" />
+    <result column="score_one" property="scoreOne" jdbcType="INTEGER" />
+    <result column="player_two" property="playerTwo" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="song_two" property="songTwo" jdbcType="VARCHAR" />
+    <result column="ticket_two" property="ticketTwo" jdbcType="INTEGER" />
+    <result column="score_two" property="scoreTwo" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="insert_state" property="insertState" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+   
+  <!-- 对战的全部信息和选手的全部信息 -->
+  <resultMap id="BattleCustomResultMap" type="com.ygode.bean.BattleManageCustom" extends="BaseResultMap">
+  		<result column="score_total2" property="scoreTotal2" jdbcType="INTEGER" />
+  		 <result column="score_total1" property="scoreTotal1" jdbcType="INTEGER" />
+  		 <result column="score_win" property="scoreWin" jdbcType="INTEGER" />
+  		<collection property="player1" ofType="com.ygode.bean.Player">
+	    	<id column="id1" property="id" jdbcType="INTEGER"/>
+	    	<result column="player_id1" property="playerId" jdbcType="VARCHAR" />
+	    	<result column="player_name1" property="playerName" jdbcType="VARCHAR" />
+	    	<result column="player_img1" property="playerImg" jdbcType="VARCHAR" />
+    	</collection>
+    	<collection property="player2" ofType="com.ygode.bean.Player">
+	    	<id column="id2" property="id" jdbcType="INTEGER"/>
+	    	<result column="player_id2" property="playerId" jdbcType="VARCHAR" />
+	    	<result column="player_name2" property="playerName" jdbcType="VARCHAR" />
+	    	<result column="player_img2" property="playerImg" jdbcType="VARCHAR" />
+    	</collection>
+  </resultMap>
+  <!-- 可以投票的比赛 -->
+  <select id="findBattling"  resultMap="BattleCustomResultMap" parameterType="java.lang.String">
+		  	SELECT 
+			bm.id id,
+			bm.player_one,
+			p1.id id1,
+			p1.player_id player_id1,
+			p1.player_name player_name1,
+			p1.player_img player_img1,
+			bm.song_one,
+			bm.ticket_one,
+			bm.ticket_one_new,
+			bm.player_two,
+			p2.id id2,
+			p2.player_id player_id2,
+			p2.player_name player_name2,
+			p2.player_img player_img2,
+			bm.song_two,
+			bm.ticket_two,
+			bm.state state,
+			bm.url url,
+			bm.insert_state,
+			bm.create_date
+		FROM `battle_manage` bm
+		LEFT JOIN player p1 ON p1.player_id = bm.player_oneID
+		LEFT JOIN player  p2 ON p2.player_id = bm.player_twoID
+		<if test="_parameter!=null">
+	     	and insert_state = #{_parameter}
+	     </if>
+     
+  </select>
+   <!-- 倒票轮完成后的清单 -->
+  <select id="detailedList1" resultMap="BattleCustomResultMap" parameterType="java.lang.String">
+  		SELECT 
+			bm.id id,
+			bm.player_one,
+			p1.id id1,
+			p1.player_id player_id1,
+			p1.player_name player_name1,
+			p1.player_img player_img1,
+			bm.song_one,
+			bm.score_one,
+			bm.ticket_one,
+			bm.ticket_one_new,
+			bm.player_two,
+			p2.id id2,
+			p2.player_id player_id2,
+			p2.player_name player_name2,
+			p2.player_img player_img2,
+			bm.song_two,
+			bm.score_two,
+			bm.ticket_two,
+			bm.state state,
+			bm.insert_state,
+			bm.create_date,
+			(100-2*bm.ticket_one) as score_total1,
+			(100-2*bm.ticket_two) as score_total2,
+			IF(
+			(100-2*bm.ticket_one)>(100-2*bm.ticket_two),
+			(100-2*bm.ticket_one),
+			(100-2*bm.ticket_two))
+			as score_win
+		FROM
+			`battle_manage` AS bm
+		LEFT JOIN player AS p1 ON player_one = p1.player_id
+		LEFT JOIN player AS p2 ON player_two = p2.player_id
+		<where>
+			<if test="_parameter!=null">
+	     	and bm.insert_state = #{_parameter}
+	     </if>
+		</where>
+		GROUP BY bm.id
+		ORDER BY score_win DESC
+  </select>
+  <!-- 正票轮完成后的清单 -->
+  <select id="detailedList2" resultMap="BattleCustomResultMap" parameterType="java.lang.String">
+  		SELECT 
+			bm.id id,
+			bm.player_one,
+			p1.id id1,
+			p1.player_id player_id1,
+			p1.player_name player_name1,
+			p1.player_img player_img1,
+			bm.song_one,
+			bm.score_one,
+			bm.ticket_one,
+			bm.ticket_one_new,
+			bm.player_two,
+			p2.id id2,
+			p2.player_id player_id2,
+			p2.player_name player_name2,
+			p2.player_img player_img2,
+			bm.song_two,
+			bm.score_two,
+			bm.ticket_two,
+			bm.state state,
+			bm.insert_state,
+			bm.create_date,
+			(round(bm.ticket_one/(bm.ticket_one+bm.ticket_two) *100,0)+bm.score_one) as score_total1,
+			(round(bm.ticket_two/(bm.ticket_one+bm.ticket_two) *100,0)+bm.score_two) as score_total2,
+			IF(
+			(round(bm.ticket_one/(bm.ticket_one+bm.ticket_two) *100,0)+bm.score_one)>
+			(round(bm.ticket_two/(bm.ticket_one+bm.ticket_two) *100,0)+bm.score_two),
+			(round(bm.ticket_one/(bm.ticket_one+bm.ticket_two) *100,0)+bm.score_one),
+			(round(bm.ticket_two/(bm.ticket_one+bm.ticket_two) *100,0)+bm.score_two))
+			as score_win
+		FROM
+			`battle_manage` AS bm
+		LEFT JOIN player AS p1 ON player_one = p1.player_id
+		LEFT JOIN player AS p2 ON player_two = p2.player_id
+		<where>
+			<if test="_parameter!=null">
+	     	and bm.insert_state = #{_parameter}
+	     </if>
+		</where>
+		GROUP BY bm.id
+		ORDER BY score_win DESC
+  </select>
+</mapper>

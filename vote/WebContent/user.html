@@ -1,0 +1,83 @@
+<!--
+  Created by IntelliJ IDEA.
+  User: Early Mo
+  Date: 2019/06/18
+  Time: 12:35
+  To change this template use File | Settings | File Templates.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户投票页面</title>
+    <script src="http://pv.sohu.com/cityjson"></script>
+    <link rel="stylesheet" href="static/PK/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/PK/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="static/PK/css/user.css">
+    <link rel="stylesheet" href="static/PK/css/swiper.min.css">
+    <link rel="stylesheet" href="static/PK/css/style.css">
+    <script src="static/PK/js/jquery-3.4.0.js"></script>
+    <script src="static/PK/js/apple.js"></script>
+    <script src="static/PK/js/swiper.min.js"></script>
+    <script src="static/PK/js/user.js"></script>
+
+
+
+</head>
+<body>
+    <section id="wrap">
+        <!-----------头部-------------------->
+        <header id="header">
+            <img class="logo" src="static/PK/images/logo.jpg">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <p class="zmc_title">重庆工程学院歌手大赛投票</p>
+        </header>
+        <!-----------头部  结束-------------------->
+
+        <!-----------swiper 轮播小效果-------------------->
+        <div class="apple-banner">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide slide1">
+                        <div class="title txt"> iPhone <br>
+                            7  在此 </div>
+                    </div>
+                    <div class="swiper-slide slide2">
+                        <div class="title txt"> <img src="img/logo_watch_large.png"> </div>
+                        <h2 class="homepage-headline txt">Series 2 新登场。</h2>
+                    </div>
+                    <div class="swiper-slide slide3">
+                        <div class="title txt"> <img src="img/logo_macbookpro_large.png">
+                            <p> 一身才华，一触即发 </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-prev"><span></span></div>
+                <div class="swiper-button-next"><span></span></div>
+                <ul class="swiper-pagination autoplay">
+                </ul>
+            </div>
+        </div>
+        <!-----------swiper 轮播小效果  结束-------------------->
+
+        <!---------选手信息 投票 展示------------->
+        <div class="mzc_usershow" id="user">
+            <div class="mzc_userinfo">
+                <img id="user1img" style="width: 2rem;height: 2rem;border-radius: 1rem;margin-left: 0.5rem" src="static/PK/images/user1.jpg">
+                <p id="user1p"></p>
+                <button id="button1" type="button" class="btn btn-primary tp" >投票</button>
+            </div>
+            <div><img style="width: 3rem;height: 4rem;margin-top: 1rem" src="static/PK/img/pk.jpg"></div>
+            <div class="mzc_userinfo">
+                <img id="user2img" style="width: 2rem;height: 2rem;border-radius: 1rem;margin-left: 0.5rem" src="static/PK/images/user2.jpg">
+                <p id="user2p"></p>
+                <button id="button2" type="button" class="btn btn-primary tp" >投票</button>
+            </div>
+        </div>
+    </section>
+</body>
+<!--<script src="js/barrage.js"></script>-->
+</html>

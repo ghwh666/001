@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ygode.dao.BattleManageMapper" >
+  <resultMap id="BaseResultMap" type="com.ygode.bean.BattleManage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="player_one" property="playerOne" jdbcType="VARCHAR" />
+    <result column="song_one" property="songOne" jdbcType="VARCHAR" />
+    <result column="ticket_one" property="ticketOne" jdbcType="INTEGER" />
+    <result column="ticket_one_new" property="ticketOneNew" jdbcType="INTEGER" />
+    <result column="player_two" property="playerTwo" jdbcType="VARCHAR" />
+    <result column="song_two" property="songTwo" jdbcType="VARCHAR" />
+    <result column="ticket_two" property="ticketTwo" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="insert_state" property="insertState" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, player_one, song_one, ticket_one, ticket_one_new, player_two, song_two, ticket_two, 
+    state, insert_state, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from battle_manage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from battle_manage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ygode.bean.BattleManage" >
+    insert into battle_manage (id, player_one, song_one, 
+      ticket_one, ticket_one_new, player_two, 
+      song_two, ticket_two, state, 
+      insert_state, create_date)
+    values (#{id,jdbcType=INTEGER}, #{playerOne,jdbcType=VARCHAR}, #{songOne,jdbcType=VARCHAR}, 
+      #{ticketOne,jdbcType=INTEGER}, #{ticketOneNew,jdbcType=INTEGER}, #{playerTwo,jdbcType=VARCHAR}, 
+      #{songTwo,jdbcType=VARCHAR}, #{ticketTwo,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{insertState,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ygode.bean.BattleManage" >
+    insert into battle_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="playerOne != null" >
+        player_one,
+      </if>
+      <if test="songOne != null" >
+        song_one,
+      </if>
+      <if test="ticketOne != null" >
+        ticket_one,
+      </if>
+      <if test="ticketOneNew != null" >
+        ticket_one_new,
+      </if>
+      <if test="playerTwo != null" >
+        player_two,
+      </if>
+      <if test="songTwo != null" >
+        song_two,
+      </if>
+      <if test="ticketTwo != null" >
+        ticket_two,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="insertState != null" >
+        insert_state,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="playerOne != null" >
+        #{playerOne,jdbcType=VARCHAR},
+      </if>
+      <if test="songOne != null" >
+        #{songOne,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketOne != null" >
+        #{ticketOne,jdbcType=INTEGER},
+      </if>
+      <if test="ticketOneNew != null" >
+        #{ticketOneNew,jdbcType=INTEGER},
+      </if>
+      <if test="playerTwo != null" >
+        #{playerTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="songTwo != null" >
+        #{songTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketTwo != null" >
+        #{ticketTwo,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="insertState != null" >
+        #{insertState,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ygode.bean.BattleManage" >
+    update battle_manage
+    <set >
+      <if test="playerOne != null" >
+        player_one = #{playerOne,jdbcType=VARCHAR},
+      </if>
+      <if test="songOne != null" >
+        song_one = #{songOne,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketOne != null" >
+        ticket_one = #{ticketOne,jdbcType=INTEGER},
+      </if>
+      <if test="ticketOneNew != null" >
+        ticket_one_new = #{ticketOneNew,jdbcType=INTEGER},
+      </if>
+      <if test="playerTwo != null" >
+        player_two = #{playerTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="songTwo != null" >
+        song_two = #{songTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketTwo != null" >
+        ticket_two = #{ticketTwo,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="insertState != null" >
+        insert_state = #{insertState,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ygode.bean.BattleManage" >
+    update battle_manage
+    set player_one = #{playerOne,jdbcType=VARCHAR},
+      song_one = #{songOne,jdbcType=VARCHAR},
+      ticket_one = #{ticketOne,jdbcType=INTEGER},
+      ticket_one_new = #{ticketOneNew,jdbcType=INTEGER},
+      player_two = #{playerTwo,jdbcType=VARCHAR},
+      song_two = #{songTwo,jdbcType=VARCHAR},
+      ticket_two = #{ticketTwo,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      insert_state = #{insertState,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

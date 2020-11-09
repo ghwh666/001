@@ -1,0 +1,99 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大屏显示</title>
+    <link rel="stylesheet" href="static/PK/css/index.css">
+    <link rel="stylesheet" href="static/PK/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/PK/css/bootstrap-theme.min.css">
+    <script src="static/PK/js/jquery-3.4.0.js"></script>
+    <script src="static/PK/js/index.js"></script>
+
+
+</head>
+<body>
+    <h1 class="mzc_h1">歌手大赛投票之夜</h1>
+    <video src="static/PK/video/movebg.mov" loop="loop" autoplay="autoplay" muted class="video1"></video>
+
+    <!------------------视频/比赛信息 播放区域---------------------------->
+    <div class="mzc_content" id="mzc_dm">
+
+        <!----------比赛信息部分---------------->
+        <div class="mzc_pk">
+
+            <!----选手1 信息--------->
+            <div class="mzc_user">
+                <!----头像------>
+                <span><img id="PlayerOneimg" src="static/PK/images/user1.jpg" width="100" height="100" title="不决定是不给你就看看，安生"></span>
+                <!---票数显示---->
+                <p class="mzc_userticket" id="PlayerOneScore">123</p>
+                <div class="mzc_usertotal"></div>
+                <!---选手姓名--->
+                <p class="mzc_username" id="PlayerOnename">选手1</p>
+            </div>
+
+            <!-----比赛基本信息------------>
+            <div class="mzc_gameinfo">
+                <h3 style="text-align: center;text-shadow: 5px 5px 5px #FF0000;line-height: 50px">重庆工程学院校园歌手大赛</h3>
+                <img src="static/PK/images/123456.png" style="width: 300px;height: 300px;margin-left: 90px;"><br>
+                <p style="color: red;line-height: 60px">>>>扫描上方二维码，进行选手投票</p>
+                <h6 style="width:150px;height:30px;margin-left: 280px;margin-bottom: 90px">主办方：重庆工程学院</h6>
+            </div>
+
+            <!-----选手2 信息------->
+            <div class="mzc_user">
+                <!----头像------>
+                <span><img id="PlayerTwoimg" src="static/PK/images/user2.jpg" width="100" height="100" title="不决定是不给你就看看，安生"></span>
+                <!---票数显示---->
+                <p class="mzc_userticket" id="PlayerTwoscore">123</p>
+                <div class="mzc_usertotal"></div>
+                <!---选手姓名--->
+                <p class="mzc_username" id="PlayerTwoname">选手1</p>
+            </div>
+
+            <!-----------------------pk结束动画展示------------------------------------------>
+            <div id="showWinner" class="showWinner">
+                <video src="static/PK/video/win.mp4" loop="loop" autoplay="autoplay" muted class="winmv" ></video>
+               <span>恭喜</span><sapn id="showWinnername">张三</sapn><span>获胜</span>
+                <!----头像------>
+                <img id="showWinnerimg" class="winner_img" src="static/PK/images/user1.jpg">
+            </div>
+            <!-----------------------pk结束动画展示   结束----------------------------------->
+
+
+
+
+        </div>
+        <!----------比赛信息部分 结束---------------->
+
+        <!----------比赛宣传视频 ------------------------>
+        <div class="mzc_move">
+            <video src="static/PK/video/11.mov" loop="loop" autoplay="autoplay" muted class="xcmove" ></video>
+        </div>
+
+        <!----------比赛宣传视频  结束 ------------------------>
+    </div>
+    <!----------------视频/比赛信息 播放区域  结束------------------------>
+
+
+    <!------------------二维码弹窗区域---------------------------->
+
+    <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+  <button type="button" class="btn btn-primary" id="mzc_ewmBtn">切换</button>
+
+  <!--    <div class="mzc_ewm">
+        <img src="images/erWeiMa.jpg" width="300" height="300">
+    </div>
+-->
+    <!------------------二维码弹窗区域 结束---------------------------->
+
+
+
+
+</body>
+<!--<script src="js/barrage.js"></script>-->
+</html>

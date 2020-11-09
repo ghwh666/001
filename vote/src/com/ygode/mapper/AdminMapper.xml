@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ygode.dao.AdminMapper">
+	<!-- PlayerResultMap Start -->
+	<resultMap id="PlayerResultMap" type="com.ygode.bean.Player">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="player_id" property="playerId" jdbcType="VARCHAR" />
+		<result column="player_name" property="playerName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="PlayerResultMapWithBLOBs" type="com.ygode.bean.Player"
+		extends="PlayerResultMap">
+		<result column="id" property="id" jdbcType="LONGVARCHAR" />
+		<result column="player_name" property="playerName" jdbcType="LONGVARCHAR" />
+		<result column="player_img" property="playerImg" jdbcType="LONGVARCHAR" />
+		<result column="player_status" property="playerStatus" jdbcType="LONGVARCHAR" />
+		<result column="PS" property="PS" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="resultMapWithBattleManage" type="com.ygode.bean.BattleManage">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="player_one" property="playerOne" jdbcType="VARCHAR" />
+		<result column="song_one" property="songOne" jdbcType="VARCHAR" />
+		<result column="ticket_one" property="ticketOne" jdbcType="INTEGER" />
+		<result column="score_one" property="scoreOne" jdbcType="INTEGER" />
+		<result column="score_two" property="scoreTwo" jdbcType="INTEGER" />
+		<result column="player_two" property="playerTwo" jdbcType="VARCHAR" />
+		<result column="song_two" property="songTwo" jdbcType="VARCHAR" />
+		<result column="ticket_two" property="ticketTwo" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="insert_state" property="insertState" jdbcType="INTEGER" />
+		<result column="player_oneID" property="playerOneID" jdbcType="INTEGER" />
+		<result column="player_twoID" property="playerTwoID" jdbcType="INTEGER" />
+		<result column="Mattch" property="Mattch" jdbcType="INTEGER" />
+	</resultMap>
+	<!-- users findusers(users users);查询用户 -->
+	<select id="findusers"  resultType="com.ygode.bean.users" parameterType="com.ygode.bean.users">
+        select * from users
+        <trim
+                prefix="where"
+                prefixOverrides="and"
+                suffixOverrides="where"
+        >
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+            <if test="username!=null and username!=''">
+                and username=#{username}
+            </if>
+            <if test="user_status!=null and user_status!=''">
+                and user_status=#{user_status}
+            </if>
+            <if test="user_pass!=null and user_pass!=''">
+                and user_pass=#{user_pass}
+            </if>
+            <if test="user_nicename!=null and user_nicename!=''">
+                and user_nicename=#{user_nicename}
+            </if>
+            <if test="user_registered!=null and user_registered!=''">
+                and user_registered=#{user_registered}
+            </if>
+            <if test="user_email!=null and user_email!=''">
+                and user_email=#{user_email}
+            </if>
+            <if test="user_right!=null and user_right!=''">
+                and user_right=#{user_right}
+            </if>
+        </trim>
+    </select>
+    
+	<!-- 查询所有选手 -->
+	<select id="findAllPlayer" resultMap="PlayerResultMapWithBLOBs">
+		SELECT * FROM player 
+	</select>
+	
+<!-- 	按条件查询所有选手信息
+    List<Player> findAllPlayerplus(Player player); -->
+    <select id="findAllPlayerPlus" resultMap="PlayerResultMapWithBLOBs">
+		SELECT * FROM player
+		<trim
+                prefix="where"
+                prefixOverrides="and"
+                suffixOverrides="where"
+        >
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+            <if test="playerName!=null and playerName!=''">
+                and player_name=#{playerName}
+            </if>
+            <if test="playerImg!=null and playerImg!=''">
+                and player_img=#{playerImg}
+            </if>
+            <if test="playerStatus!=null and playerStatus!=''">
+                and player_status=#{playerStatus}
+            </if>
+            <if test="PS!=null and PS!=''">
+                and PS=#{PS}
+            </if>
+        </trim>
+	</select>
+	
+	<!-- 选手状态跟改 
+	int updatePlayerStatus(int temp1,int status); -->
+	<update id="updatePlayerStatus">
+		update player set player_status = #{playerStatus} where id = #{id}
+	</update>
+	
+	
+	<!-- 添加投票选手 -->
+	<insert id="addBattleManage" parameterType="com.ygode.bean.BattleManage">
+		INSERT INTO battle_manage (
+			player_one,
+			ticket_one,
+			player_two,
+			ticket_two,
+			state,
+			insert_state,
+			create_date,
+			player_oneID,
+			player_twoID,
+			Mattch
+		)
+		VALUES
+			(
+				#{playerOne},
+				'0',
+				#{playerTwo},
+				'0',
+				'0',
+				'0',
+				NOW(),
+				#{playerOneID},
+				#{playerTwoID},
+				#{Mattch}
+			)
+	</insert>
+	<!-- 查询所有投票选手 -->
+	<select id="findAllBattleManageVo" resultType="com.ygode.bean.BattleManageVo">
+		SELECT
+			bm.id AS id,
+			bm.player_one AS playerOne,
+			bm.player_oneID AS playerOneID,
+			pl_1.player_name AS playerOneName,
+			bm.song_one AS songOne,
+			bm.ticket_one AS ticketOne,
+			bm.score_one AS scoreOne,
+			bm.player_two AS playerTwo,
+			pl_2.player_name AS playerTwoName,
+			bm.song_two AS songTwo,
+			bm.ticket_two AS ticketTwo,
+			bm.player_twoID AS playerTwoID,
+			bm.score_two AS scoreTwo,
+			bm.url AS url,
+			bm.state AS state,
+			bm.insert_state AS insertState
+		FROM
+			`battle_manage` AS bm
+		LEFT JOIN player AS pl_1 ON player_one = pl_1.player_id
+		LEFT JOIN player AS pl_2 ON player_two = pl_2.player_id
+		ORDER BY
+			bm.create_date DESC
+	</select>
+	<!-- 查看所有比赛状态 -->
+	<select id="findAllBattleManage" resultMap="resultMapWithBattleManage">
+		SELECT 
+			*
+		FROM
+			battle_manage
+	</select>
+	<!-- List<BattleManage> findAllBM(int Mattch);
+		查询当前赛季比赛
+	 -->
+	<select id="findAllBM" resultMap="resultMapWithBattleManage">
+		SELECT 
+			*
+		FROM
+			battle_manage
+		where
+			Mattch = #{Mattch}
+	</select>
+	<!-- 打开投票通道 -->
+	<update id="updateBattleOpen" >
+		update battle_manage set state = 1 where id = #{id}
+	</update>
+	<!-- 关闭投票通道 -->
+	<update id="updateBattleClose" parameterType="com.ygode.bean.BattleManage">
+		update battle_manage set state = 2,ticket_one=#{ticketOne}, ticket_two=#{ticketTwo} where id = #{id}
+	</update>
+	<!-- 统计票数 -->
+	<select id="findCountVote" resultType="com.ygode.bean.VoteVo">
+		select
+			player,
+			ticket,
+			count(*) as ticketNew
+		from
+			vote
+		where
+			battle_manage_id  = #{id}
+		group by player,ticket
+	</select>
+	<!-- void updataBM(BattleManage battleManage);
+	跟新票数
+	 -->
+	 <update id="updataBM" parameterType="com.ygode.bean.BattleManage">
+		update battle_manage set
+		ticket_one=#{ticketOne},
+		ticket_two=#{ticketTwo}
+		 where
+		  id = #{id}
+	</update>
+	<!-- 查找当前比赛 -->
+	<select id="findBattleManage" resultMap="resultMapWithBattleManage">
+		SELECT 
+			*
+		FROM
+			battle_manage
+		where
+			id = #{id}
+	</select>
+	
+	<!-- 添加比赛的分数 -->
+	<update id="addScore" parameterType="com.ygode.bean.BattleManage">
+		update battle_manage set score_one = #{scoreOne},score_two = #{scoreTwo} where id = #{id}
+	</update>
+	
+		<!-- 关闭投票通道 -->
+	<update id="updateStopBattle" parameterType="com.ygode.bean.BattleManage">
+		update battle_manage set state = 3,ticket_one=#{ticketOne}, ticket_two=#{ticketTwo} where id = #{id}
+	</update>
+	
+	<!-- 查找当前赛季
+	int findMattch(); -->
+	<select id="findMattch" resultType="Integer">
+	select max(Mattch) from battle_manage
+	</select>
+	
+	<!-- boolean addUser(users user); 
+		添加用户
+	-->
+	<insert id="addUser" parameterType="com.ygode.bean.BattleManage">
+		INSERT INTO users (
+			username,
+			user_pass,
+			user_nicename,
+			user_email,
+			user_registered,
+			user_status,
+			user_right
+		)
+		VALUES
+			(
+				#{username},
+				#{user_pass},
+				#{user_nicename},
+				#{user_email},
+				NOW(),
+				0,
+				0
+			)
+	</insert>
+	<!-- 
+	boolean addBM(BattleManage battleManage);
+	添加票数
+	 -->
+	<update id="addBM" parameterType="com.ygode.bean.BattleManage">
+		update battle_manage set song_one=#{songOne},song_two=#{songTwo},url=#{url} where id = #{id}
+	</update>
+	
+	<!-- 
+	boolean addPlayer(Player player);
+	添加歌曲和背景
+	 -->
+	 <insert id="addPlayer" parameterType="com.ygode.bean.Player">
+		INSERT INTO player (
+			player_name,
+			player_img,
+			player_status
+		)
+		VALUES
+			(
+				#{playerName},
+				#{playerImg},
+				"1"
+			)
+	</insert>
+	
+	<!-- boolean upPlayer(Player player);
+	修改状态 -->
+	<update id="upPlayer" parameterType="com.ygode.bean.Player">
+		update player set player_status=#{playerStatus},PS=#{PS} where id = #{id}
+	</update>
+</mapper>
